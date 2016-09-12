@@ -81,3 +81,8 @@ var planTrip = function(departLine, departStop, arriveLine, arriveStop) {
   console.log(unionSquareTransferString + tempArray.toString(', '));
   console.log(stopNumber.length + ' stops in total.');
 };
+
+// Next time over, call a separate function to deliver a single journey if on
+// the same line, OR two journeys if on two lines.
+// arriveLine === departLine, call journey ONCE
+// arriveLine !== departLine, call Journey TWICE.
