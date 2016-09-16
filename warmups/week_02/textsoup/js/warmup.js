@@ -35,7 +35,7 @@ var putWord = function() {
   $div.css({
     top: randy( window.innerHeight ) + 'px',
     left: randy( window.innerWidth ) + 'px',
-    fontSize: (40 + randy(150)) + 'px'  // note that in a CSS file you would use the property 'font-size'
+    fontSize: (40 + randy(80)) + 'px'  // note that in a CSS file you would use the property 'font-size'
     // extra tricks:
     // transform: 'rotate(' + randy(360) + 'deg)',
     //color: 'rgb(' + randy(255) + ', ' + randy(255) + ', ' + randy(255) + ')'
