@@ -61,4 +61,4 @@ var putWord = function() {
 // that would immediately call our function and pass its *return* value to
 // setInterval as the function setInterval should call every 100ms - and our
 // function returns nothing, so it would be passing 'undefined' to setInterval
-setInterval(putWord, 500);
+setInterval(putWord, 100);
