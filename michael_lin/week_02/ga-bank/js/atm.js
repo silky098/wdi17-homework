@@ -8,6 +8,21 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
 
 // Put DOM from here down /////////////////////
 // Checking UI/DOM ////////////////////////
+  var poorCheckingChecker = function() {
+    if ($('#checking-balance').text() === "$0") {
+    $('#checking').css("background-color", "#f00")
+    } else {
+    $('#checking').css("background-color", "#6C9A74")
+    }
+  };
+
+  var poorSavingsChecker = function() {
+    if ($('#savings-balance').text() === "$0") {
+    $('#savings').css("background-color", "#f00")
+    } else {
+    $('#savings').css("background-color", "#6C9A74")
+    }
+  };
 
 // Checking Deposit UI/DOM ///
   $('#checking-deposit').on('click', function(){
@@ -15,6 +30,8 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
     checkDepositMoney(getCheckingInput);
     $('#checking-balance').text('$' + bankAccounts.checkingBalance);
     console.log('Current Checking Balance: ' + bankAccounts.checkingBalance);
+    poorCheckingChecker();
+    poorSavingsChecker();
   });
 
 // Checking Withdraw UI/DOM ///
@@ -24,6 +41,8 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
     $('#checking-balance').text('$' + bankAccounts.checkingBalance);
     $('#savings-balance').text('$'+ bankAccounts.savingsBalance);
     console.log('Current Checking Balance: ' + bankAccounts.checkingBalance);
+    poorCheckingChecker();
+    poorSavingsChecker();
   });
 
 
@@ -63,6 +82,8 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
     savingsDepositMoney(getSavingsInput);
     $('#savings-balance').text('$' + bankAccounts.savingsBalance);
     console.log("current Savings Balance: " + bankAccounts.savingsBalance);
+    poorCheckingChecker();
+    poorSavingsChecker();
   });
 
 // Savings Withdraw UI/DOM ///
@@ -72,6 +93,8 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
     $('#savings-balance').text('$'+ bankAccounts.savingsBalance);
     $('#checking-balance').text('$' + bankAccounts.checkingBalance);
     console.log("current Savings Balance: " + bankAccounts.savingsBalance)
+    poorCheckingChecker();
+    poorSavingsChecker();
   });
 
 
@@ -103,5 +126,11 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
     return bankAccounts.savingsBalance;
     }
   };
+
+// Color changer ///////////////////////////
+
+  poorCheckingChecker();
+  poorSavingsChecker();
+
 
 }); // END OF (DOCUMENT) READ ////////////////
