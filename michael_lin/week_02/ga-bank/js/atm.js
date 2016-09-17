@@ -8,6 +8,8 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
 
 // Put DOM from here down /////////////////////
 // Checking UI/DOM ////////////////////////
+
+// Check whether someone is poor or not:
   var poorCheckingChecker = function() {
     if ($('#checking-balance').text() === "$0") {
     $('#checking').css("background-color", "#f00")
@@ -24,25 +26,33 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
     }
   };
 
+// Call both functions:
+  var checkIfPoor = function() {
+    poorCheckingChecker();
+    poorSavingsChecker();
+  };
+
+// The red hurt my eyes, so I made variables ///
+  var checkingBal = bankAccounts.checkingBalance;
+  var savingsBal = bankAccounts.savingsBalance;
+
 // Checking Deposit UI/DOM ///
   $('#checking-deposit').on('click', function(){
     var getCheckingInput = parseFloat($('#checking-amount').val());
     checkDepositMoney(getCheckingInput);
-    $('#checking-balance').text('$' + bankAccounts.checkingBalance);
-    console.log('Current Checking Balance: ' + bankAccounts.checkingBalance);
-    poorCheckingChecker();
-    poorSavingsChecker();
+    $('#checking-balance').text('$' + checkingBal);
+    console.log('Current Checking Balance: ' + checkingBal);
+    checkIfPoor();
   });
 
 // Checking Withdraw UI/DOM ///
   $('#checking-withdraw').on('click', function() {
     var getCheckingInput = parseFloat($('#checking-amount').val());
     checkWithdrawMoney(getCheckingInput)
-    $('#checking-balance').text('$' + bankAccounts.checkingBalance);
-    $('#savings-balance').text('$'+ bankAccounts.savingsBalance);
-    console.log('Current Checking Balance: ' + bankAccounts.checkingBalance);
-    poorCheckingChecker();
-    poorSavingsChecker();
+    $('#checking-balance').text('$' + checkingBal);
+    $('#savings-balance').text('$'+ savingsBal);
+    console.log('Current Checking Balance: ' + checkingBal);
+    checkIfPoor();
   });
 
 
@@ -50,27 +60,27 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
 
 // Checking Deposit Function ///
   var checkDepositMoney = function(amount) {
-    bankAccounts.checkingBalance = bankAccounts.checkingBalance + amount;
-    return bankAccounts.checkingBalance;
+    checkingBal = checkingBal + amount;
+    return checkingBal;
   };
 
 // Checking Withdraw function ///
   var checkWithdrawMoney = function(amount) {
-    if (amount > (bankAccounts.checkingBalance + bankAccounts.savingsBalance)) {
+    if (amount > (checkingBal + savingsBal)) {
       alert("No. We're a bank, not a charity")
       console.log("No. We're a bank, not a charity")
-    } else if (amount > bankAccounts.checkingBalance && amount <= (bankAccounts.savingsBalance + bankAccounts.checkingBalance)) {
-      amount = amount - bankAccounts.checkingBalance;
-      console.log(amount)
-      var savingsBal = savingsWithdrawMoney(amount);
-      bankAccounts.checkingBalance = 0;
+    } else if (amount > checkingBal && amount <= (savingsBal + checkingBal)) {
+      amount = amount - checkingBal;
+      var saveBal = savingsWithdrawMoney(amount);
+      checkingBal = 0;
       return bankAccounts = {
-        savingsBalance: savingsBal,
-        checkingBalance: 0
+        checkingBalance: 0,
+        savingsBalance: saveBal
+
       };
     } else {
-      bankAccounts.checkingBalance = bankAccounts.checkingBalance - amount;
-    return bankAccounts.checkingBalance;
+      checkingBal = checkingBal - amount;
+    return checkingBal;
     }
   };
 
@@ -80,21 +90,19 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
   $('#savings-deposit').on('click', function(){
     var getSavingsInput = parseFloat($('#savings-amount').val());
     savingsDepositMoney(getSavingsInput);
-    $('#savings-balance').text('$' + bankAccounts.savingsBalance);
-    console.log("current Savings Balance: " + bankAccounts.savingsBalance);
-    poorCheckingChecker();
-    poorSavingsChecker();
+    $('#savings-balance').text('$' + savingsBal);
+    console.log("current Savings Balance: " + savingsBal);
+    checkIfPoor();
   });
 
 // Savings Withdraw UI/DOM ///
   $('#savings-withdraw').on('click', function(){
     var getSavingsInput = parseFloat($('#savings-amount').val());
     savingsWithdrawMoney(getSavingsInput);
-    $('#savings-balance').text('$'+ bankAccounts.savingsBalance);
-    $('#checking-balance').text('$' + bankAccounts.checkingBalance);
-    console.log("current Savings Balance: " + bankAccounts.savingsBalance)
-    poorCheckingChecker();
-    poorSavingsChecker();
+    $('#savings-balance').text('$'+ savingsBal);
+    $('#checking-balance').text('$' + checkingBal);
+    console.log("current Savings Balance: " + savingsBal)
+    checkIfPoor();
   });
 
 
@@ -102,35 +110,31 @@ $(document).ready(function() { // BEGIN DOCUMENT READY/////
 
 // Savings Deposit Function ///
   var savingsDepositMoney = function(amount) {
-    bankAccounts.savingsBalance = bankAccounts.savingsBalance + amount;
-    return bankAccounts.savingsBalance;
+    savingsBal = savingsBal + amount;
+    return savingsBal;
   };
 
 // Savings Withdraw Function ///
   var savingsWithdrawMoney = function(amount) {
-    if (amount > (bankAccounts.savingsBalance + bankAccounts.checkingBalance)) {
-      // This part should just close the function and stop the math. (OR REDUCE balance to $0)
+    if (amount > (savingsBal + checkingBal)) {
       alert("No. We're a bank, not a charity")
       console.log("No. We're a bank, not a charity")
-    } else if (amount > bankAccounts.savingsBalance && amount <= (bankAccounts.savingsBalance + bankAccounts.checkingBalance)){
-      amount = amount - bankAccounts.savingsBalance;
+    } else if (amount > savingsBal && amount <= (savingsBal + checkingBal)){
+      amount = amount - savingsBal;
       var checkBal = checkWithdrawMoney(amount);
-      bankAccounts.savingsBalance = 0;
-      console.log(bankAccounts.checkingBalance)
+      savingsBal = 0;
       return bankAccounts = {
-        savingsBalance: 0,
-        checkingBalance: checkBal
+        checkingBalance: checkBal,
+        savingsBalance: 0
+
       };
     } else {
-      bankAccounts.savingsBalance = bankAccounts.savingsBalance - amount;
-    return bankAccounts.savingsBalance;
+      savingsBal = savingsBal - amount;
+    return savingsBal;
     }
   };
 
-// Color changer ///////////////////////////
-
-  poorCheckingChecker();
-  poorSavingsChecker();
-
+// Initialised color changer ///////////////////////////
+checkIfPoor();
 
 }); // END OF (DOCUMENT) READ ////////////////
