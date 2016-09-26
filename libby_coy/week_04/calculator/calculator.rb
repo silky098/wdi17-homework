@@ -9,6 +9,7 @@ def get_user_choice
   puts "(**) - Squaring"
   puts "(<3) - BMI Calculator"
   puts "(<>) - Trip Calculator"
+  puts "(m) - Mortgage Calculator"
   puts "(q) - Quits"
 
   print "Enter your selection: "
@@ -92,7 +93,24 @@ def trip_calculator
 
 end
 
+def mortgage_calculator
+  print "Please enter your principal: "
+  principal = gets.to_f
 
+  print "Enter your annual interest rate: "
+  interest_rate = gets.to_f
+
+  print "Enter the amount of months you will pay off the loan: "
+  months = gets.to_f
+
+  monthly_rate = interest_rate / 12
+  x = (1 + monthly_rate) ** months
+
+  monthly_payment = (principal * monthly_rate * x) / ( x - 1 )
+
+  print "Your monthly payment will be $#{ monthly_payment }.\n"
+
+end
 
 menu_choice = get_user_choice
 
@@ -122,6 +140,9 @@ until menu_choice == 'q'
 
   when '<>'
     trip_calculator
+
+  when 'm'
+    mortgage_calculator
 
   end
 
