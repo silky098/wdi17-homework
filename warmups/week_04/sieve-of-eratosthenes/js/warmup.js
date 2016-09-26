@@ -1,5 +1,5 @@
 
-// For more information see here:
+// For more information see here: https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 
 var sieve = {
 
