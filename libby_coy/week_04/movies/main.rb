@@ -28,11 +28,9 @@ end
 get '/movietable' do
 
   current = request.fullpath
-  @imdbID = current.to_s.split(//).flatten.last(9).join
-  # <a href="/movietable?movie=<%=movie["imdbID"]%>">
-  @newurl = "http://omdbapi.com/?i=<%=@imdbID%>"
+  @newurl = "http://omdbapi.com/?i=" + params[ "movie" ]
   movie_data = HTTParty.get @newurl
-  @title = movie_data["Title"]
+  @title = movie_data[ "Title" ]
 
   @poster = movie_data[ "Poster" ]
   #
