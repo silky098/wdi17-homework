@@ -11,12 +11,11 @@ def check_stations(t_line, start, stop)
   start_index = lines[t_line].index start # grab index of start
   stop_index = lines[t_line].index stop # grab index of stop
   if start_index < stop_index
-    trip1 = trip_line[start_index..stop_index]
-    return trip1
+    trip = trip_line[start_index..stop_index]
   else
     trip = trip_line[stop_index..start_index].reverse
-    return trip
   end
+  trip
 end
 
 def plan_trip(start_line, start_station, stop_line, stop_station)
@@ -31,4 +30,4 @@ def plan_trip(start_line, start_station, stop_line, stop_station)
   end
 end
 
-plan_trip("N", "Times Square", "L", "8th")
+plan_trip("N", "Times Square", "N", "8th")
